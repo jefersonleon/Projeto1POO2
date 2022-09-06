@@ -5,6 +5,10 @@
  */
 package br.ulbra.view;
 
+import br.ulbra.DAO.UsuarioDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,11 +49,11 @@ public class FrLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 102, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("SISTEMA CRUD");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
@@ -107,18 +111,21 @@ public class FrLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogarActionPerformed
-      String email, senha;
-      email = edEmail.getText();
-      senha = edSenha.getText();
-      if (email.equals("xiru@gmail.com") && 
-              senha.equals("123")){
-          FrMenu menu = new FrMenu();
-          menu.setVisible(true);
-          this.dispose();
-      }else{
-          JOptionPane.showMessageDialog(null, "Login"
-                  + " ou Senha inválido!");
-      }
+
+        UsuarioDAO dao = null;
+        try {
+            dao = new UsuarioDAO();
+            if (dao.checkLogin(edEmail.getText(), edSenha.getText())) {
+                new FrMenu().setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Login ou Senha incorreta!");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btLogarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

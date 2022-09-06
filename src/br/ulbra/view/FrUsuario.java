@@ -82,20 +82,14 @@ public class FrUsuario extends javax.swing.JFrame {
 
         jLabel2.setText("COD");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 79, -1, -1));
-
-        jTextField1.setText("jTextField1");
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 99, 68, 27));
 
         jLabel3.setText("NOME");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
-
-        jTextField2.setText("jTextField2");
         jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 287, 28));
 
         jLabel4.setText("E-MAIL");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
-
-        jTextField3.setText("jTextField3");
         jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 287, 28));
 
         jLabel5.setText("TELEFONE");
@@ -152,8 +146,6 @@ public class FrUsuario extends javax.swing.JFrame {
 
         jLabel6.setText("SENHA");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
-
-        jPasswordField1.setText("jPasswordField1");
         jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 260, 30));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/809537_diskette_multimedia_save_save disk_technology_icon.png"))); // NOI18N
