@@ -5,6 +5,10 @@
  */
 package br.ulbra.view;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Leon
@@ -50,6 +54,11 @@ public class FrMenu extends javax.swing.JFrame {
         jMenu1.setText("Cadastros");
 
         jMenuItem1.setText("Usuários");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Sair");
@@ -84,6 +93,16 @@ public class FrMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+      
+        try {
+            new FrUsuario().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
