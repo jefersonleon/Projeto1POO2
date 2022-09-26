@@ -5,9 +5,32 @@
  */
 package br.ulbra.view;
 
+import br.ulbra.DAO.ConnectionFactory;
+import br.ulbra.DAO.UsuarioDAO;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+
+import net.sf.jasperreports.view.JasperViewer;
+import static sun.security.krb5.Confounder.bytes;
 
 /**
  *
@@ -18,9 +41,12 @@ public class FrMenu extends javax.swing.JFrame {
     /**
      * Creates new form FrMenu
      */
-    public FrMenu() {
+    Connection con = null;
+
+    public FrMenu() throws SQLException {
         initComponents();
-        this.setLocationRelativeTo(null);   
+        this.setLocationRelativeTo(null);
+        con = ConnectionFactory.getConnection();
     }
 
     /**
@@ -45,11 +71,11 @@ public class FrMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AULA JAVA CRUD");
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/61703_bird_icon.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
 
         jMenu1.setText("Cadastros");
 
@@ -69,6 +95,11 @@ public class FrMenu extends javax.swing.JFrame {
         jMenu2.setText("Relatórios");
 
         jMenuItem3.setText("Rel 1");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Rel 2");
@@ -93,16 +124,84 @@ public class FrMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void carregarRelatorio(String caminho_relatorio, Map parametros) throws ClassNotFoundException, SQLException {
+        try {
 
+            JasperReport relatorio = JasperCompileManager.compileReport(caminho_relatorio);
+            JasperPrint relatorio_preenchido = JasperFillManager.fillReport(relatorio, parametros, con);
+            JasperViewer.viewReport(relatorio_preenchido);
+
+            con.close();
+        } catch (JRException ex) {
+            Logger.getAnonymousLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro no relatorio");
+        } catch (SQLException ex) {
+            Logger.getAnonymousLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro no carregar dados do relatorio");
+        }
+    }
+
+    public void geraRelatorio() throws JRException, Exception {
+        Map parameters = new HashMap();
+        Connection con = null;
+        JasperFillManager.fillReportToFile("relario/RelatorioUsu.jasper", parameters, con);
+        JasperExportManager.exportReportToPdfFile("relatorio/RelatorioUsu.jrprint");
+        JasperViewer.viewReport("relatorio/RelatorioUsu.pdf", true);
+
+    }
+    
+    public void ShowReports() throws SQLException {
+        
+        try {
+            //Conexão com o banco
+           
+            //Use o HashMap para adicionar filtros caso queira, não esquecer de criar os filtros no relatório
+            Map<String, Object> map = new HashMap<>();
+
+            //exemplo filtros
+            //map.put("nomeFiltro1", "valorAFiltrar");
+            //map.put("nomeFiltro2", "valorAFiltrar");
+            //
+            //
+            //Cria o JasperPrint infromando o caminho do arquivo.jasper criado pelo JasperStudio, filtros e conexão com o banco
+            JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Leon\\Documents\\NetBeansProjects\\ProjetoCRUD\\relatorio\\RelatorioUsu.jasper", map, con);
+
+            //Realizar o print do relatório
+            JasperViewer.viewReport(print, false);
+
+            //ATENÇÃO, na pasta onde se encontra o arquivo .jasper, deve conter tambem o arquivo .jrxml, ambos criados pelo JasperStudio
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao gerar relatório\n" + ex, "ERRO", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-      
         try {
             new FrUsuario().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            //        try {
+//            carregarRelatorio("C:\\Users\\Leon\\Documents\\NetBeansProjects\\ProjetoCRUD\\relatorio\\RelatorioUsu.jrxml", null);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+           ShowReports();
+        } catch (Exception ex) {
+            Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,7 +233,11 @@ public class FrMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrMenu().setVisible(true);
+                try {
+                    new FrMenu().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

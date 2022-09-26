@@ -17,27 +17,38 @@ public class Usuario {
     private String senhaUsu;
     private String foneUsu;
     private int sexoUsu;
+    private String cepUsu;
+    private String logradouroUsu;
+    private String numUsu;
+    private String bairroUsu;
+    private String cidadeUsu;
+    private String estadoUsu;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsu, String nomeUsu, String emailUsu, 
-            String senhaUsu, String foneUsu, int sexoUsu) {
+    public Usuario(int idUsu, String nomeUsu, String emailUsu, String senhaUsu, String foneUsu, int sexoUsu, String cepUsu, String logradouroUsu, String numUsu, String bairroUsu, String cidadeUsu, String estadoUsu) {
         this.idUsu = idUsu;
         this.nomeUsu = nomeUsu;
         this.emailUsu = emailUsu;
         this.senhaUsu = senhaUsu;
         this.foneUsu = foneUsu;
         this.sexoUsu = sexoUsu;
+        this.cepUsu = cepUsu;
+        this.logradouroUsu = logradouroUsu;
+        this.numUsu = numUsu;
+        this.bairroUsu = bairroUsu;
+        this.cidadeUsu = cidadeUsu;
+        this.estadoUsu = estadoUsu;
     }
-    public String toString(){
-        return " ID:    "+this.idUsu
-              +" Nome:  "+this.nomeUsu
-              +" E-mail:"+this.emailUsu
-              +" Senha: "+this.senhaUsu
-              +" Fone:  "+this.foneUsu
-              +" Sexo:  "+this.sexoUsu;
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsu=" + idUsu + ", nomeUsu=" + nomeUsu + ", emailUsu=" + emailUsu + ", senhaUsu=" + senhaUsu + ", foneUsu=" + foneUsu + ", sexoUsu=" + sexoUsu + ", cepUsu=" + cepUsu + ", logradouroUsu=" + logradouroUsu + ", numUsu=" + numUsu + ", bairroUsu=" + bairroUsu + ", cidadeUsu=" + cidadeUsu + ", estadoUsu=" + estadoUsu + '}';
     }
+
+   
+    
 
     public int getIdUsu() {
         return idUsu;
@@ -85,6 +96,54 @@ public class Usuario {
 
     public void setSexoUsu(int sexoUsu) {
         this.sexoUsu = sexoUsu;
+    }
+
+    public String getCepUsu() {
+        return cepUsu;
+    }
+
+    public void setCepUsu(String cepUsu) {
+        this.cepUsu = cepUsu;
+    }
+
+    public String getLogradouroUsu() {
+        return logradouroUsu;
+    }
+
+    public void setLogradouroUsu(String logradouroUsu) {
+        this.logradouroUsu = logradouroUsu;
+    }
+
+    public String getNumUsu() {
+        return numUsu;
+    }
+
+    public void setNumUsu(String numUsu) {
+        this.numUsu = numUsu;
+    }
+
+    public String getBairroUsu() {
+        return bairroUsu;
+    }
+
+    public void setBairroUsu(String bairroUsu) {
+        this.bairroUsu = bairroUsu;
+    }
+
+    public String getCidadeUsu() {
+        return cidadeUsu;
+    }
+
+    public void setCidadeUsu(String cidadeUsu) {
+        this.cidadeUsu = cidadeUsu;
+    }
+
+    public String getEstadoUsu() {
+        return estadoUsu;
+    }
+
+    public void setEstadoUsu(String estadoUsu) {
+        this.estadoUsu = estadoUsu;
     }
   
    

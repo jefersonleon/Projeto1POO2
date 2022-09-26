@@ -166,19 +166,22 @@ public class UsuarioDAO {
 
     }
     
-    public List<Usuario> readForDesc(String nome) {
+    public List<Usuario> readForDesc(String campo, String nome) {
 
+       String argumento = campo +" like '%"+nome+"%'"; 
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+        String query = "select idUsu, nomeUsu, emailUsu, senhaUsu, foneUsu, sexoUsu from tbusuario WHERE "+argumento;
+        
         ArrayList<Usuario> usuarios = new ArrayList<>();
-
+  
         try {
-            stmt = con.prepareStatement("SELECT * FROM tbusuario WHERE nomeusu LIKE ?");
-            stmt.setString(1, "%"+nome+"%");
          
+            stmt = con.prepareStatement(query);
+       
+        
             rs = stmt.executeQuery();
-
+           // JOptionPane.showMessageDialog(null, rs.next()+" " +rs.getString("nomeUsu"));
             while (rs.next()) {
 
                Usuario usuario = new Usuario();
@@ -202,5 +205,6 @@ public class UsuarioDAO {
         return usuarios;
 
     }
-
+    
+    
 }
